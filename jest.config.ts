@@ -10,7 +10,9 @@ const config: Config = {
       'ts-jest',
       {
         tsconfig: '<rootDir>/tsconfig.json',
-        diagnostics: false,
+        diagnostics: {
+          warnOnly: true,
+        },
       },
     ],
   },

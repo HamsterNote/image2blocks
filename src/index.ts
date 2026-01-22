@@ -37,6 +37,8 @@ const DEFAULT_THRESHOLD = 128;
 const DEFAULT_DILATION_RADIUS = 0;
 
 const DATA_URL_PREFIX = 'data:';
+const HTTP_PREFIXES = ['http://', 'https://', 'file://'];
+const FILE_EXTENSIONS = ['.png', '.jpg', '.jpeg', '.gif', '.bmp', '.tiff', '.webp'];
 
 function isCanvasElement(value: unknown): value is HTMLCanvasElement {
   return typeof HTMLCanvasElement !== 'undefined' && value instanceof HTMLCanvasElement;
@@ -50,11 +52,27 @@ function isFile(value: unknown): value is File {
   return typeof File !== 'undefined' && value instanceof File;
 }
 
+function isUrl(input: string): boolean {
+  const trimmed = input.trim().toLowerCase();
+  return HTTP_PREFIXES.some(prefix => trimmed.startsWith(prefix));
+}
+
+function isFilePath(input: string): boolean {
+  const trimmed = input.trim().toLowerCase();
+  return FILE_EXTENSIONS.some(ext => trimmed.endsWith(ext));
+}
+
 function normalizeBase64Input(input: string): string {
   const trimmed = input.trim();
+
   if (trimmed.startsWith(DATA_URL_PREFIX)) {
     return trimmed;
   }
+
+  if (isUrl(trimmed) || isFilePath(trimmed)) {
+    return trimmed;
+  }
+
   return `data:image/png;base64,${trimmed}`;
 }
 
