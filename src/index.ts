@@ -59,7 +59,15 @@ function isUrl(input: string): boolean {
 
 function isFilePath(input: string): boolean {
   const trimmed = input.trim().toLowerCase();
-  return FILE_EXTENSIONS.some(ext => trimmed.endsWith(ext));
+  return FILE_EXTENSIONS.some(ext => {
+    if (!trimmed.endsWith(ext)) {
+      return false;
+    }
+    // Ensure there's a path separator before the extension to avoid misclassifying
+    // base64 blobs or other strings that coincidentally end with an extension
+    const beforeExtension = trimmed.slice(0, -ext.length);
+    return /[/\\]/.test(beforeExtension);
+  });
 }
 
 function normalizeBase64Input(input: string): string {

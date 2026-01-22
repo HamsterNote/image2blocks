@@ -28,4 +28,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Dependency configuration**: Moved `image-js` from `dependencies` to `peerDependencies` to align with Vite's external configuration and allow consumers to provide their own version
 - **TypeScript test diagnostics**: Updated `jest.config.ts` to use `diagnostics: { warnOnly: true }` for better development feedback without failing tests
 - **Bash script safety**: Fixed command substitution quoting in `.specify/scripts/bash/check-prerequisites.sh` to prevent word-splitting issues
+- **File path detection**: Updated `isFilePath` to require a path separator (`/` or `\`) before the extension to prevent misclassifying base64 blobs or other strings that coincidentally end with a file extension
+- **CI dependency resolution**: Added `image-js` to `devDependencies` (keeping it in `peerDependencies`) to ensure the module is available for testing and building in CI environments
 
