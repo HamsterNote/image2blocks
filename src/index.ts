@@ -59,15 +59,7 @@ function isUrl(input: string): boolean {
 
 function isFilePath(input: string): boolean {
   const trimmed = input.trim().toLowerCase();
-  return FILE_EXTENSIONS.some(ext => {
-    if (!trimmed.endsWith(ext)) {
-      return false;
-    }
-    // Ensure there's a path separator before the extension to avoid misclassifying
-    // base64 blobs or other strings that coincidentally end with an extension
-    const beforeExtension = trimmed.slice(0, -ext.length);
-    return /[/\\]/.test(beforeExtension);
-  });
+  return FILE_EXTENSIONS.some(ext => trimmed.endsWith(ext));
 }
 
 function normalizeBase64Input(input: string): string {
@@ -162,7 +154,9 @@ async function loadImageFromInput(input: ImageInput | HTMLCanvasElement | HTMLIm
     return Image.load(src);
   }
 
-  throw new Error('Unsupported image input. Expected base64 string, File, or ArrayBuffer.');
+  throw new Error(
+    'Unsupported image input. Expected base64 string, File, ArrayBuffer, HTMLCanvasElement, or HTMLImageElement.',
+  );
 }
 
 function extractBlocksFromMask(
