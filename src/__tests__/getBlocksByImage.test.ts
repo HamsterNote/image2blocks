@@ -49,7 +49,7 @@ describe('getBlocksByImage', () => {
     const invalidInput = 123 as unknown as ImageInput;
 
     await expect(getBlocksByImage(invalidInput)).rejects.toThrow(
-      'Unsupported image input. Expected base64 string, File, or ArrayBuffer.',
+      'Unsupported image input. Expected base64 string, File, ArrayBuffer, HTMLCanvasElement, or HTMLImageElement.',
     );
   });
 
