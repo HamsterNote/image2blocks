@@ -1,0 +1,83 @@
+openapi: 3.0.3
+info:
+  title: Image Blocks API
+  version: "1.0"
+paths:
+  /blocks/by-image:
+    post:
+      summary: Convert image to blocks
+      description: Return bounding boxes for connected regions detected in an image.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                imageBase64:
+                  type: string
+                threshold:
+                  type: integer
+                  minimum: 0
+                  maximum: 255
+                dilationRadius:
+                  type: integer
+                  minimum: 0
+              required:
+                - imageBase64
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                threshold:
+                  type: integer
+                  minimum: 0
+                  maximum: 255
+                dilationRadius:
+                  type: integer
+                  minimum: 0
+              required:
+                - file
+      responses:
+        "200":
+          description: Blocks detected
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  blocks:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Block"
+        "400":
+          description: Invalid input
+components:
+  schemas:
+    Block:
+      type: object
+      properties:
+        id:
+          type: integer
+        area:
+          type: integer
+        bbox:
+          $ref: "#/components/schemas/Box"
+    Box:
+      type: object
+      properties:
+        x:
+          type: integer
+        y:
+          type: integer
+        width:
+          type: integer
+        height:
+          type: integer

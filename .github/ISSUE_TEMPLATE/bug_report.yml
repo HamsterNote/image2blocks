@@ -1,0 +1,78 @@
+name: "🐛 Bug 报告 (Bug Report)"
+description: "提交一个 Bug (Report a bug)"
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢你提交 Bug 报告！请尽量填写完整，以便我们更快定位问题。
+
+  - type: input
+    id: bug_summary
+    attributes:
+      label: "问题概述 (Summary)"
+      description: "请简要描述 Bug 现象"
+      placeholder: "例如：点击按钮后页面崩溃"
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: "复现步骤 (Steps to Reproduce)"
+      description: "请详细描述复现步骤"
+      placeholder: |
+        1. 打开页面...
+        2. 点击...
+        3. 出现错误...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: "预期行为 (Expected Behavior)"
+      description: "说明你期望的正确行为"
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: "实际行为 (Actual Behavior)"
+      description: "说明实际发生的情况"
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: "截图或录屏 (Screenshots)"
+      description: "可选，提供截图或录屏以帮助分析"
+    validations:
+      required: false
+
+  - type: textarea
+    id: environment_desktop
+    attributes:
+      label: "桌面环境 (Desktop Environment)"
+      description: "请填写你的桌面系统信息"
+      placeholder: |
+        OS: Windows 11 / macOS 14 / Ubuntu 22.04
+        Browser: Chrome 120
+        Version: 1.0.0
+    validations:
+      required: false
+
+  - type: textarea
+    id: environment_mobile
+    attributes:
+      label: "移动环境 (Mobile Environment)"
+      description: "如果与移动端相关，请填写"
+      placeholder: |
+        Device: iPhone 15
+        OS: iOS 17
+        Browser: Safari
+    validations:
+      required: false
